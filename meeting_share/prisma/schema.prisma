@@ -1,0 +1,36 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Group {
+  id          String     @id @default(uuid())
+  name        String
+  color       String
+  thumbnail   String?
+  meetingTime DateTime   @default(now())
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  files       FileItem[]
+  @@index([createdAt(sort: Desc)])
+}
+
+model FileItem {
+  id          String     @id @default(uuid())
+  name        String
+  type        String
+  size        Int
+  url         String
+  sortOrder   Int        @default(0)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  groupId     String
+  group       Group      @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  @@index([groupId, type, sortOrder])
+}
