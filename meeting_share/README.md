@@ -1,40 +1,79 @@
 <div align="center">
 <img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+
+[English](./README.md) | [简体中文](./README.zh-CN.md)
 </div>
 
-# Run and deploy your AI Studio app
+# Meeting Report / OpenClaw Share
 
-This contains everything you need to run your app locally.
+A modern, full-stack Next.js application designed to manage, display, and share meeting reports and media content. The platform allows users to create visually appealing meeting groups, upload related files (images and documents), drag-and-drop to reorder content, and view immersive, AI-assisted summaries alongside the media.
 
-View your app in AI Studio: https://ai.studio/apps/948e749a-8d10-46b5-844f-897004695c1e
+## ✨ Key Features
 
-## Run Locally
+- **Group Management**: Create, edit, and organize meeting groups. Customize groups with distinct colors, thumbnails, and specific meeting times.
+- **Content Management**: Upload images and files into groups. Reorder content intuitively via Drag-and-Drop. File deletions are safely synchronized with the local file system.
+- **Immersive Share & Playback View**: A dedicated playback page to present reports dynamically. Users can view images side by side with Markdown-rendered AI summaries, complete with image navigation and a collapsible summary pane.
+- **AI Integration**: Powered by Google's Gemini AI API to generate insightful and structured meeting intelligence.
 
-**Prerequisites:**  Node.js
+## 🛠️ Tech Stack
 
+- **Framework**: Next.js (App Router), React 19
+- **Database**: Prisma ORM with SQLite (`better-sqlite3`)
+- **Styling**: Tailwind CSS v4
+- **Animations**: Motion (Framer Motion)
+- **Drag & Drop**: `@dnd-kit`
+- **Markdown Rendering**: `react-markdown`
+- **Icons**: `lucide-react`
+- **AI**: `@google/genai` (Gemini)
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+## 🚀 Getting Started
 
-# 工程目录
+### Prerequisites
+- Node.js (v18+ recommended)
+- npm or yarn
+
+### 1. Install dependencies
+```bash
+npm install
 ```
-src/
-├── types/
-│   └── index.ts          # 类型定义
-├── data/
-│   └── mockData.ts       # Mock 数据
-├── components/
-│   ├── SortableItem.tsx   # 拖拽排序组件
-│   └── Header.tsx         # 页头组件
-├── pages/
-│   ├── GroupManagement.tsx # 分组管理页面
-│   ├── ContentUpload.tsx  # 内容上传页面
-│   └── ContentShare.tsx   # 内容分享页面
-├── App.tsx                # 根组件（路由+状态）
-├── main.tsx               # 入口文件
-└── index.css              # 全局样式
 
+### 2. Environment Variables
+Create a `.env` file in the root directory and add your API keys and database URL:
+```env
+# SQLite Database URL
+DATABASE_URL="file:./dev.db"
+
+# Gemini AI API Key
+GEMINI_API_KEY="your_api_key_here"
+```
+
+### 3. Initialize the Database
+Sync your Prisma schema with the SQLite database:
+```bash
+npx prisma db push
+```
+
+### 4. Run the Development Server
+```bash
+npm run dev
+```
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+## 📁 Project Structure
+
+```text
+meeting_share/
+├── prisma/               # Prisma database schema (schema.prisma)
+├── public/               # Static assets
+├── docs/                 # Documentation
+├── src/
+│   ├── app/              # Next.js App Router (Pages, Layouts, API routes)
+│   │   └── actions/      # Next.js Server Actions (e.g., group.ts)
+│   ├── components/       # Reusable React UI components (Header, Cards, Drag/Drop items)
+│   ├── data/             # Mock data or data utilities
+│   ├── lib/              # Utility functions and library wrappers
+│   ├── views/            # High-level page views and composite components
+│   └── types/            # TypeScript type definitions
+├── .env                  # Environment variables
+└── package.json          # Project configuration and dependencies
 ```
